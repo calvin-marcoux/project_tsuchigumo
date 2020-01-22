@@ -1,5 +1,51 @@
-Hello World
-- $data.url
-#foreach($url in $data.resourcesUrl)
-- $url
+import {group, sleep} from "k6";
+import http from "k6/http";
+
+/*
+ * Script for pages (#foreach($page in $data) $page.url, #end)
+ *
+ *  Created at $date
+ */
+
+export let options = {
+    stages: [
+        {
+            "duration": "3m0s",
+            "target": 25
+        }
+    ],
+    maxRedirects: 0,
+    discardResponseBodies: true,
+};
+
+export default function () {
+    const headers = {
+        "headers": {
+            "accept-encoding": "gzip, deflate",
+            "accept-language": "en-US",
+            "upgrade-insecure-requests": "1",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/62.0.3183.0 Safari/537.36",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+        }
+    }
+#foreach($page in $data)
+    group("$foreach.count - for page $page.url", function () {
+        let req = [], res;
+        req.push({
+            "method": "get",
+            "url": "$data.url",
+            "params": headers
+        });
+#foreach($url in $page.resourcesUrl)
+        req.push({
+            "method": "get",
+            "url": "$url",
+            "params": headers
+        });
 #end
+        res = http.batch(req);
+        // Random sleep between 5s and 10s
+        sleep(Math.floor(Math.random() * 5 + 5));
+    });
+#end
+};
