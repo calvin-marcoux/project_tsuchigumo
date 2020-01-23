@@ -17,12 +17,8 @@ fun main(args: Array<String>) {
 
     app.routes {
         path("api") {
-            path("crawl") {
-                get(CrawlController::getCrawlData)
-            }
-            path("file") {
-                get(FileController::getK6File)
-            }
+            path("crawl", CrawlController)
+            path("file", FileController)
         }
     }
 }

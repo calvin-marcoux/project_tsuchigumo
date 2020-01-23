@@ -1,10 +1,11 @@
 package com.tsuchigumo.crawl
 
+import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.EndpointGroup
-import io.javalin.http.Context
 
-object CrawlController{
-    fun getCrawlData(ctx: Context) {
-        ctx.json(HTMLExtraction.extract(ctx.queryParamMap()))
+object CrawlController : EndpointGroup {
+
+    override fun addEndpoints() {
+        get("") {it.json(HTMLExtraction.extract(it.queryParamMap()))}
     }
 }

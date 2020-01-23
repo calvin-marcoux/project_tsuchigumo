@@ -1,11 +1,15 @@
 package com.tsuchigumo.file
 
-import io.javalin.http.Context
+import io.javalin.apibuilder.ApiBuilder.get
+import io.javalin.apibuilder.EndpointGroup
 
-object FileController {
-    fun getK6File(ctx: Context) {
-        ctx
-            .render("template/templateFile.vtl", mapOf("data" to K6Templating.generateFile(ctx.queryParamMap())))
-            .contentType("text/javascript")
+
+object FileController : EndpointGroup {
+
+    override fun addEndpoints() {
+        get("") {
+            it.render("template/templateFile.vtl", mapOf("data" to K6Templating.generateFile(it.queryParamMap())))
+                    .contentType("text/javascript")
+        }
     }
 }

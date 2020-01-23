@@ -29,7 +29,7 @@ object HTMLExtraction {
                 .filter { it.attr("src").contains(urlObj.host) }
                 .map { it.attr("src") }
                 .toMutableList()
-        list.addAll(connect.select("link[rel=\"stylesheet\"]")
+        list.addAll(connect.select("""link[rel="stylesheet"]""")
                 .filter { it.attr("href").contains(urlObj.host) }
                 .map { it.attr("href") })
         return BasePage(url, list)
