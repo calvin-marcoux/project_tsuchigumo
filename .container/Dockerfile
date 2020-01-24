@@ -1,6 +1,6 @@
 FROM maven:3.6.3-jdk-11-slim as builder
-COPY pom.xml /tmp/
-COPY src /tmp/src/
+COPY ../pom.xml /tmp/
+COPY ../src /tmp/src/
 WORKDIR /tmp/
 RUN mvn package
 

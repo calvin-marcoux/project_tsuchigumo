@@ -4,7 +4,7 @@ services:
     image: tsuchigumo:latest
     build:
       context: ../
-      dockerfile: ./Dockerfile
+      dockerfile: ./.container/Dockerfile
   redis:
     image: redis:5.0.7
     ports:

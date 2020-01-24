@@ -7,11 +7,11 @@ import java.nio.charset.StandardCharsets
 
 object PageDataPersistence{
 
-    val json = Json(JsonConfiguration.Stable)
+    private val json = Json(JsonConfiguration.Stable)
 
     fun save(id: String? = null, data: BasePage) {
         val id = id ?: generateId(data.url)
-        Jedis.connection[id] = json.stringify(BasePage.serializer(), data);
+        Jedis.connection[id] = json.stringify(BasePage.serializer(), data)
     }
 
     fun get(id: String) = json.parse(BasePage.serializer(), Jedis.connection[generateId(id)])
