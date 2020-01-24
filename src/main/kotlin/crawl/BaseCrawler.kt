@@ -4,10 +4,7 @@ import io.javalin.http.BadRequestResponse
 import org.jsoup.Jsoup
 import java.net.URL
 
-data class BasePage(
-    var url: String = "",
-    var resourcesUrl: List<String> = emptyList()
-)
+//TODO Ajouter une verification avec la persistance pour éviter le sur fetch.
 object HTMLExtraction {
     fun extract(param: Map<String, Any>): List<BasePage> {
         val url = param["url"] ?: throw BadRequestResponse()
